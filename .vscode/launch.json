@@ -8,21 +8,14 @@
             "name": "Flask tuto : app.py",
             "type": "python",
             "request": "launch",
-            "program": "C:\\Users\\damie\\Documents\\Lycée\\NSI\\Parmentier\\Parmentier\\app.py",
+            "program": "C:\\Users\\damie\\Documents\\Lycée\\NSI\\Parmentier-Cuisine\\app.py",
             "console": "integratedTerminal"
         },
         {
             "name": "Python : Test",
             "type": "python",
             "request": "launch",
-            "program": "C:\\Users\\damie\\Documents\\Lycée\\NSI\\Parmentier\\Parmentier\\test.py",
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "Python : Main",
-            "type": "python",
-            "request": "launch",
-            "program": "C:\\Users\\damie\\Documents\\Lycée\\NSI\\Parmentier\\Parmentier\\main.py",
+            "program": "C:\\Users\\damie\\Documents\\Lycée\\NSI\\Parmentier-Cuisine\\test.py",
             "console": "integratedTerminal"
         },
         {

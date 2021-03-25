@@ -1,0 +1,2 @@
+https://stackoverflow.com/questions/41818387/is-it-possible-to-export-python-and-its-necessary-libraries-into-a-environment-i
+https://docs.python.org/fr/3/library/venv.html

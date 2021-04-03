@@ -40,6 +40,9 @@ Le programme va se diviser en 3 dossiers :
 
 ###     web_host :
         TODO
+        /!\ du fait de l'architecture d'un projet Flask, certains fichiers doivent se trouver directement dans l'arborescence du projet, d'autres dans \templates, etc... Avoir un dossier web_host ne fait donc plus beaucoup de sens.
+        
+        /!\ Pour actualiser la page, toujours bien faire Ctrl + Shift + R, sinon le navigateur conserve la feuille de style css en cache et elle n'est pas actualisée si on a fait des changemens dessus !
 
 
 ###     SQL :

@@ -7,7 +7,7 @@
 {% block body %}
 <div class="background-div"></div>
 <div class="frontpage">
-    <button class="member-button">
+    <button class="member-button" id="member-button">
         <img src="{{ url_for('static', filename='img/member.png') }}" alt="Mon compte | Se connecter | préferences">
     </br>
         Member space 
@@ -20,14 +20,24 @@
         <h3 style="color: white"> Dîtes-nous en plus sur les recettes que vous cherchez ! </h3>
 
         <div class="filter-new">
-            <p class="filter-txt"></p>
+            <p>Nouveau filtre : Je cherche une recette qui </p>
+            <select name='filtre' class='filtre-selecteur'>
+                <option value="ingredientwhitelist">...Contient un ingrédient...</option>
+                <option value="ingredientblacklist">...Ne contient pas un ingrédient...</option>
+                <option value="time">...Se prépare en un certain temps maximum...</option>
+                <!-- <option value="regime">...Correspond à un régime en particulier</option> -->
+                <option value="budget">...Correspond à un budget</option>
+                <option value="level">...Correspond à mon talent de cuistot</option>
+            </select>
+            <p id="filtre-middle-txt"></p>
+            <select name="valeur" class="filtre-selecteur" hidden></select>
         </div>
 
-        <ul>
-            <li>Filter 1</li>
-            <li>Filter 2</li>
-            <li> ... </li>
+        <ul id="filtre-liste">
         </ul>
     </div>
 </div>
+<button name="find-recette">
+    Trouver une recette
+</button>
 {% endblock %}

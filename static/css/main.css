@@ -96,3 +96,41 @@ body, html {
 
     color: #e0e0e0;
 }
+
+
+.filter-new {
+    display: inline;
+    font-style: 25;
+
+}
+
+.filtre-selecteur {
+    /* appearance: none; */
+
+    background-color: transparent;
+    border: thin solid white;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    min-width: 15ch;
+    max-width: 30%;
+    line-height: 1.1;
+
+    color: white;
+    font-style: italic;
+    font-size: 25;
+
+/*     display: grid;
+    grid-template-areas: "select"; */
+
+}
+/* 
+select,
+.filtre-selecteur::after {
+    content: "";
+    width: 0.8em;
+    height: 0.5em;
+    background-color: white;
+    clip-path: polygon(100% 0%, 0% 0%, 50% 100%);
+    grid-area: select;
+} */

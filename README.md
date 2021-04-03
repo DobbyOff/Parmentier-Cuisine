@@ -2,8 +2,7 @@
  Your future favorite cooking dude !
 
 /!\ vous trouverez la documentation dans DOC.md.
-/!\ Flask ne tourne pas, j'ai juste fait une version normale du site web avec html et css, je fais le fonctionnel avec flask dès que j'ai fini.
-En attente de flask, le site web est template/index.html
+/!\ Flask tourne, vous trouverez le programme dans la branche 'flask-ing', lancez le fichier app.py
 
 ## architecture :
 Le programme va se diviser en 3 dossiers :

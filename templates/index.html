@@ -20,8 +20,8 @@
         <h3 style="color: white"> Dîtes-nous en plus sur les recettes que vous cherchez ! </h3>
 
         <div class="filter-new">
-            <p>Nouveau filtre : Je cherche une recette qui </p>
-            <select name='filtre' class='filtre-selecteur'>
+            <label for="filtre">Nouveau filtre : Je cherche une recette qui </label>
+            <select name='filtre' id='filtre' class='filtre-selecteur'>
                 <option value="ingredientwhitelist">...Contient un ingrédient...</option>
                 <option value="ingredientblacklist">...Ne contient pas un ingrédient...</option>
                 <option value="time">...Se prépare en un certain temps maximum...</option>
@@ -29,8 +29,19 @@
                 <option value="budget">...Correspond à un budget</option>
                 <option value="level">...Correspond à mon talent de cuistot</option>
             </select>
-            <p id="filtre-middle-txt"></p>
-            <select name="valeur" class="filtre-selecteur" hidden></select>
+            <br/>
+            <label for="valuefield" id="filtre-middle-txt"></label>
+            <div id="valuefield">
+                <select id="filtrediffinput">
+                    <option value="très facile">très facile</option>
+                    <option value="moyenne">facile</option>  
+                </select>
+
+                <select id="filtrebudgetinput">
+                    <option value="bon marché">bon marché</option>
+                    <option value="moyen">moyen</option>
+                </select>
+            </div>
         </div>
 
         <ul id="filtre-liste">
@@ -40,4 +51,5 @@
 <button name="find-recette">
     Trouver une recette
 </button>
+<script src="{{ url_for('static', filename='script/main.js') }}" async></script>
 {% endblock %}

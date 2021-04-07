@@ -127,18 +127,8 @@ body, html {
     color: white;
     font-style: italic;
     font-size: 25;
-
-/*     display: grid;
-    grid-template-areas: "select"; */
-
 }
-/* 
-select,
-.filtre-selecteur::after {
-    content: "";
-    width: 0.8em;
-    height: 0.5em;
-    background-color: white;
-    clip-path: polygon(100% 0%, 0% 0%, 50% 100%);
-    grid-area: select;
-} */
+
+.filtre-saved {
+    display: inline;
+}

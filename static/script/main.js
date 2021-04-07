@@ -1,6 +1,6 @@
 //Ce script sert à gérer ce qu'il se passe quand on change la sélection d'un filtre.
 
-var inputTxt = document.createElement('input');
+var inputTxt = document.getElementById('inputTxt');
 var inputDiff = document.getElementById('filtrediffinput');
 var inputBudget = document.getElementById('filtrebudgetinput');
 

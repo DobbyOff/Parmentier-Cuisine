@@ -18,10 +18,18 @@
     </div>
     <div class="filter-section">
         <h3 style="color: white"> Dîtes-nous en plus sur les recettes que vous cherchez ! </h3>
+        
+        <div class="vl"></div>
+        <div class="filter-new">  
+            <label for="filtre">
+                <div style="text-decoration: underline;"> Nouveau filtre : </div>
+                    Je cherche une recette qui 
+            </label>
+            <form action="/" id="filtreForm" method="GET">
+            </form>
 
-        <div class="filter-new">
-            <label for="filtre">Nouveau filtre : Je cherche une recette qui </label>
-            <select name='filtre' id='filtre' class='filtre-selecteur'>
+
+            <select name='filtre' id='filtre' class='filtre-selecteur' form="filtreForm">
                 <option value="ingredientwhitelist">...Contient un ingrédient...</option>
                 <option value="ingredientblacklist">...Ne contient pas un ingrédient...</option>
                 <option value="time">...Se prépare en un certain temps maximum...</option>
@@ -29,22 +37,31 @@
                 <option value="budget">...Correspond à un budget</option>
                 <option value="level">...Correspond à mon talent de cuistot</option>
             </select>
+
             <br/>
-            <label for="valuefield" id="filtre-middle-txt"></label>
+
+            <label for="valuefield" id="filtre-middle-txt" form="filtreForm"></label>
             <div id="valuefield">
-                <select id="filtrediffinput">
-                    <option value="très facile">très facile</option>
+                <select id="filtrediffinput" name="filtrediffinput" form="filtreForm">
+                    <option value="tres_facile">très facile</option>
                     <option value="moyenne">facile</option>  
                 </select>
 
-                <select id="filtrebudgetinput">
-                    <option value="bon marché">bon marché</option>
+                <select id="filtrebudgetinput" name="filtrebudgetinput" form="filtreForm">
+                    <option value="bon_marche">bon marché</option>
                     <option value="moyen">moyen</option>
                 </select>
+
+                <input id="inputTxt" name="inputTxt" form="filtreForm">
             </div>
+
+            <input type="submit" name="submit" form="filtreForm" value="Ajouter le filtre">
         </div>
 
         <ul id="filtre-liste">
+            <li class="filtre-saved">
+                <p>La recette</p>
+            </li>
         </ul>
     </div>
 </div>

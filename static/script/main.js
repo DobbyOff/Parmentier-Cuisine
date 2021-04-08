@@ -57,4 +57,4 @@ var hidefiltres = function (e) {
 }
  
 filtreSelect.addEventListener('change', updateDispMiddle);
-hidefiltres();
+updateDispMiddle()

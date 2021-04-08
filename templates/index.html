@@ -64,16 +64,14 @@
                 comme de l'html, non comme du texte (voir app.py, ligne 39) -->
         </ul>
 
-        <form action="/" method="GET">
-            <!-- <label for="deletefiltre"></label> -->
-            <input type="submit" id="deletefiltrebutton" name="deletefiltre" value="Supprimer le dernier filtre">
-        </form>
+        {{ bouton_del|safe}}
+        
     </div>
     <p>Si vous voyez ce texte et que la page est bizarre, merci de la recharger avec Ctrl+Maj+R</p>
 </div>
-<button name="find-recette" class="find-recette">
-    Trouver une recette TODO
-</button>
+<form action="/find" method="POST">
+    <input type="submit" name="find-recette" class="find-recette" value="Trouver une recette">
+</form>
 
 
 <script src="{{ url_for('static', filename='script/main.js') }}" async></script>

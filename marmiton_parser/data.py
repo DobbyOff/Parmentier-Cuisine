@@ -27,6 +27,9 @@ class filters(Enum):
  
 
 def ConvertPrepTimeToInt(a):
+    if a is None:
+        return 10**6
+
     preptime = a.replace(' ', '')
     if preptime.endswith("min"):
         preptime = preptime[:-3]
@@ -42,4 +45,4 @@ def ConvertPrepTimeToInt(a):
 
     return int(minutes)
 
-PREPINFO_TRANSLATOR = {"très facile":1, "facile":2, "moyenne":3, "moyen":1, "bon marché":0}
+PREPINFO_TRANSLATOR = {"tres_facile":1, "très facile":1, "facile":2, "moyenne":3, "moyen":1, "bon_marche":0, "bon marché":0}

@@ -131,4 +131,35 @@ body, html {
 
 .filtre-saved {
     display: inline;
+    /* Je n'arrive pas à faire en sorte que les élements soient
+        affichés en ligne au lieu d'être alignés verticalement :/ */
 }
+
+
+.find-recette {
+    position: absolute;
+    z-index: 3;
+    margin-left: 40%;
+    margin-right: 40%;
+    width: 20%;
+    bottom: 10%;
+    height: 10%;
+
+    border: 3px solid white;
+    border-radius: 30%;
+
+    background-color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0);
+
+    font-size: large;
+    color: white;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition-duration: 30ms;
+}
+
+.find-recette:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+

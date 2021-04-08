@@ -2,7 +2,10 @@
  Your future favorite cooking dude !
 
 /!\ vous trouverez la documentation dans DOC.md.
-/!\ Flask tourne, vous trouverez le programme dans la branche 'flask-ing', lancez le fichier app.py
+/!\ lancez le fichier app.py
+/!\ des fois la page charge bizarrement. Si vous ne voyez pas les selecttags pour les filtres et que vous avez l'impression
+        que tout est écrasé vers le bas, rechargez la page avec Ctrl+Maj+R (pour vider le cache css)
+
 
 ## architecture :
 Le programme va se diviser en 3 dossiers :

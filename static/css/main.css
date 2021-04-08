@@ -1,0 +1,165 @@
+body, html {
+    height: 100%;
+    overflow: hidden;
+}
+
+* {
+    box-sizing: border-box
+}
+
+
+.background-div {
+    background-image: url('../img/bg.jpg');
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+
+    background-position: center;
+    background-size: cover;
+
+    width: 100%;
+    height: 100%;
+}
+
+
+.frontpage {
+    z-index: 2;
+}
+
+.member-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 3;
+    vertical-align: middle;
+    display: table-cell;
+
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0);
+    color: white;
+
+    border: 2px solid white;
+    border-radius: 8px;
+
+    transition-duration: 0.4s;
+}
+
+
+.member-button:hover {
+    background: #e0e0e0;
+    color: black;
+}
+
+
+.frontpage .top-section {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.5);
+
+    color: white;
+    text-align: center;
+    font-size: 35px;
+
+    border: 2px solid white ;
+}
+
+
+.top-section-underline {
+    font-size: 20px;
+    color: white;
+    font-weight: lighter;
+    font-style: italic;
+    
+    position: relative;
+    top: -40px;
+    left: 20px;
+}
+
+
+.filter-section {
+    z-index: 2;
+    position: absolute;
+    top: 33%;
+    width: 84%;
+    height: 100%;
+
+    margin-left: 8%;
+    margin-right: 8%;
+    padding-left: 4%;
+
+    background: black;
+    background: rgba(0,0,0, .5);
+    border: 2px solid white;
+
+    color: white;
+}
+
+.vl {
+    border-left: 3px solid white;
+    height: 100%;
+    position: absolute;
+}
+
+.filter-new {
+    display: inline;
+    font-style: 25;
+    position: relative;
+    left: 25px;
+}
+
+
+
+.filtre-selecteur {
+    /* appearance: none; */
+
+    background-color: transparent;
+    border: thin solid white;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    min-width: 15ch;
+    max-width: 30%;
+    line-height: 1.1;
+
+    color: white;
+    font-style: italic;
+    font-size: 25;
+}
+
+.filtre-saved {
+    display: inline;
+    /* Je n'arrive pas à faire en sorte que les élements soient
+        affichés en ligne au lieu d'être alignés verticalement :/ */
+}
+
+
+.find-recette {
+    position: absolute;
+    z-index: 3;
+    margin-left: 40%;
+    margin-right: 40%;
+    width: 20%;
+    bottom: 10%;
+    height: 10%;
+
+    border: 3px solid white;
+    border-radius: 30%;
+
+    background-color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0);
+
+    font-size: large;
+    color: white;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition-duration: 30ms;
+}
+
+.find-recette:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+

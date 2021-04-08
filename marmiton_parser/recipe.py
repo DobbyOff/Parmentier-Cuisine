@@ -90,8 +90,9 @@ class Recipe:
     
     def Contains(self, ingr):
         """retourne True si l'ingrédient passé en commentaire (str) est contenu dans la recette"""
+        print("recipe :", ingr)
         for e in self._ingredients:
-            if ingr in e:
+            if ingr.capitalize() in e.capitalize():
                 return True
 
 

@@ -1,37 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Parmentier | Your favorite cooking dude </title>
-    <link href="main.css" rel="stylesheet">
-</head>
-<body>
-    <div class="background-div"></div>
-    <div class="frontpage">
-        <button class="member-button">
-            <img src="member.png" alt="Mon compte | Se connecter | préferences">
-        </br>
-            Member space 
-        </button>
-        <div class="top-section">
-            <h1>Parmentier</h1>
-            <h3 class="top-section-underline">Your favorite cooking dude !</h3>
-        </div>
-        <div class="filter-section">
-            <h3 style="color: white"> Dîtes-nous en plus sur les recettes que vous cherchez ! </h3>
+{% extends 'base.html' %}
 
-            <div class="filter-new">
-                <p class="filter-txt"></p>
+{% block head %}
+<title>Parmentier | Your favorite cooking dude</title>
+{% endblock %}
+
+{% block body %}
+<div class="background-div"></div>
+<div class="frontpage">
+    <button class="member-button" id="member-button">
+        <img src="{{ url_for('static', filename='img/member.png') }}" alt="Mon compte | Se connecter | préferences">
+    </br>
+        Member space 
+    </button>
+    <div class="top-section">
+        <h1>Parmentier</h1>
+        <h3 class="top-section-underline">Your favorite cooking dude !</h3>
+    </div>
+    <div class="filter-section">
+        <h3 style="color: white"> Dîtes-nous en plus sur les recettes que vous cherchez ! </h3>
+        
+        <div class="vl"></div>
+        <div class="filter-new">  
+            <label for="filtre">
+                <div style="text-decoration: underline;"> Nouveau filtre : </div>
+                    Je cherche une recette qui 
+            </label>
+            <form action="/" id="filtreForm" method="GET">
+            </form>
+
+
+            <select name='filtre' id='filtre' class='filtre-selecteur' form="filtreForm">
+                <option value="ingredientwhitelist">...Contient un ingrédient...</option>
+                <option value="ingredientblacklist">...Ne contient pas un ingrédient...</option>
+                <option value="time">...Se prépare en un certain temps maximum...</option>
+                <!-- <option value="regime">...Correspond à un régime en particulier</option> -->
+                <option value="budget">...Correspond à un budget</option>
+                <option value="level">...Correspond à mon talent de cuistot</option>
+            </select>
+
+            <br/>
+
+            <label for="valuefield" id="filtre-middle-txt" form="filtreForm"></label>
+            <div id="valuefield">
+                <select id="filtrediffinput" name="filtrediffinput" form="filtreForm">
+                    <option value="tres_facile">très facile</option>
+                    <option value="moyenne">facile</option>  
+                </select>
+
+                <select id="filtrebudgetinput" name="filtrebudgetinput" form="filtreForm">
+                    <option value="bon_marche">bon marché</option>
+                    <option value="moyen">moyen</option>
+                </select>
+
+                <input id="inputTxt" name="inputTxt" form="filtreForm">
             </div>
 
-            <ul>
-                <li>Filter 1</li>
-                <li>Filter 2</li>
-                <li> ... </li>
-            </ul>
+            <input type="submit" name="submit" form="filtreForm" value="Ajouter le filtre">
         </div>
+
+        <ul id="filtre-liste">
+            {{ liste_filtres|safe }}
+            <!-- le |safe demande à Jinga2 de prendre le paramètre liste-filtes 
+                comme de l'html, non comme du texte (voir app.py, ligne 39) -->
+        </ul>
+
+        {{ bouton_del|safe}}
+        
     </div>
-</body>
-</html>
+    <p>Si vous voyez ce texte et que la page est bizarre, merci de la recharger avec Ctrl+Maj+R</p>
+</div>
+<form action="/find" method="POST">
+    <input type="submit" name="find-recette" class="find-recette" value="Trouver une recette">
+</form>
+
+
+<script src="{{ url_for('static', filename='script/main.js') }}" async></script>
+{% endblock %}

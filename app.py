@@ -20,7 +20,7 @@ txtToFiltresTranslator = {"level":filters.niveau, "budget":filters.budget,
 
 boutonDelMontré = False
 bouton_del_arg = ""
-boutonDelHtml = "<form action='/delete_last_filtre' method='GET'><input type='submit' id='deletefiltrebutton' name='deletefiltre' value='Supprimer le dernier filtre'></form>"
+boutonDelHtml = "<form action='/delete_last_filtre' method='GET'><input type='submit' style='margin-left: 50px;' id='deletefiltrebutton' name='deletefiltre' value='Supprimer le dernier filtre'></form>"
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -64,8 +64,8 @@ def index():
         else:
             return "404 : arrête de faire joujou avec les url >:("
 
-        nfiltre += "<div class=\"metadata\" hidden>" + _filtre + "</div><div class=\"metadata\" hidden>" + _valeur + "</div>"
-        nfiltre += "</p></li><!--coucou-->"
+        nfiltre += "</p><div class=\"metadata\" hidden>" + _filtre + "</div><div class=\"metadata\" hidden>" + _valeur + "</div>"
+        nfiltre += "</li><!--coucou-->"
         FILTRES_Html = nfiltre + FILTRES_Html
 
         if not boutonDelMontré:
@@ -78,6 +78,7 @@ def index():
     else:
         print(FILTRES_Liste)
         return render_template('index.html', liste_filtres="<li>Pas de filtres</li>", bouton_del=bouton_del_arg)
+
 
 
 
@@ -151,11 +152,7 @@ if __name__ == "__main__":
 
 
 # TODO :
-#  - Il semble y avoir un problème avec le filtre 'ingredientblacklist' qui ne marche pas.
-#  J'ai essayé avec du sucre et il ne le prennait pas en compte. Il faudrait refaire des tests.
-#  - Faire en sorte que l'entrée texte s'affiche dès que la page charge
 #  - afficher la page marmiton sur la page
-#  - réussir à faire afficher les <li> des filtres en *ligne*
 #  - faire en sorte que le prg oublie les filtres après avoir trouvé une recette
 
 

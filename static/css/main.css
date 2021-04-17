@@ -129,8 +129,8 @@ body, html {
     font-size: 25;
 }
 
-.filtre-saved {
-    display: inline;
+ .filtre-saved {
+    list-style: circle;
     /* Je n'arrive pas à faire en sorte que les élements soient
         affichés en ligne au lieu d'être alignés verticalement :/ */
 }
@@ -161,5 +161,6 @@ body, html {
 
 .find-recette:hover {
     background-color: rgba(0, 0, 0, 0.5);
+    
 }
 

@@ -27,17 +27,22 @@ class MarmitonParser:
             print("du coup oui")
             url = recipes.pop(randint(0, len(recipes)-1)) 
             R = Recipe(url)
+            recettebonne = True
             
             print('argument passé au marmitonparser :', filterDico[filters.ingredientsblacklist])
             for ingr in filterDico[filters.ingredientsblacklist]:
                 if R.Contains(ingr):
                     print("R contient l'ingrédient")
-                    continue
+                    recettebonne = False
             print('du coup non')
             
             for ingr in filterDico[filters.ingredientswhitelist]:
                 if not R.Contains(ingr):
+                    recettebonne = False
                     continue
+            
+            if not recettebonne:
+                continue
             
             if R._preparationdata['time'] != None:
                 if  ConvertPrepTimeToInt(R._preparationdata['time']) > ConvertPrepTimeToInt(filterDico[filters.tempsmax]):

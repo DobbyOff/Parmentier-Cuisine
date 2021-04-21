@@ -164,3 +164,18 @@ body, html {
     
 }
 
+.result-container {
+    position: absolute;
+    top: 35%;
+    left: 20%;
+    z-index: 10;
+
+    width: 60%;
+    height: 40%;
+    padding-left: 10px;
+    padding-top: 10px;
+
+    background-color: white;
+    border: 3px solid black ;
+    border-radius: 15px;
+}

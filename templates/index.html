@@ -75,17 +75,18 @@
     <input type="submit" name="find-recette" class="find-recette" value="Trouver une recette">
 </form>
 
-
+{% if show_result == "oui": %}
 <div class="result-container">
     <h2>Recette trouvée :</h2>
-    <div style="display: table-cell;">
-        <img src="https://assets.afcdn.com/recipe/20160926/5624_w157h157c1.jpg">
-        <div >
+    <div id="result-info">
+        <img style="display: inline-block;" src="https://assets.afcdn.com/recipe/20160926/5624_w157h157c1.jpg">
+        <div id="result-info-txt">
             <p>Pizza aux 3 fromages</p>
             <p>Bon marché, très facile, 40 min de préparation</p>
         </div>
     </div>
 </div>
+{% endif %}
 
 
 <script src="{{ url_for('static', filename='script/main.js') }}" async></script>

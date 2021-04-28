@@ -42,3 +42,25 @@ html = requests.get(url).content
 
 ##      Soup.contents
     Retourne tous les enfants de l'élement représenté par l'instance dans l'arborescence html. Attention, les sauts de ligne (\n) sont aussi comptés dans les enfants.
+
+
+# ENUM
+Un enum est type de variable customisé qui peut prendre un certain nombre de voiture. C'est pas très utilisé en python, mais partout si.
+exemple :
+
+from enum import Enum
+
+class véhicule(Enum):
+    moto = 1
+    voiture = 2
+    avion = 3
+    bicyclette = 4
+
+montypedevéhicule = véhicule.moto
+
+C'est très utile pour classifier des types ou tout ce qui doit tenir dans un panel de valeurs prédéfini.
+
+On pourrait utiliser juste une string :
+montypedevéhicule = "moto"
+Mais, si vous faites une faute de frappe par exemple, alors votre programme va bugger. Si vous faites une faute de frappe avec un enum, le programme va faire un erreur.
+Je trouve les enum plus simples à utiliser et bien pratiques pour avoir un programme un minimum rangé

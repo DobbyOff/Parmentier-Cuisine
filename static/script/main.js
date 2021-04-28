@@ -4,6 +4,8 @@ var inputTxt = document.getElementById('inputTxt');
 var inputDiff = document.getElementById('filtrediffinput');
 var inputBudget = document.getElementById('filtrebudgetinput');
 
+//Ici, on trouve ce que le site est censé affiché, comme champ de saisi et comme texte introducteur 
+//selon le filtre sélectionné
 repliques = {
     "ingredientwhitelist": {
         txt:"Ingrédient :",
@@ -37,6 +39,7 @@ var filtreSelect = document.getElementById('filtre'),
 
 var inputWrapper = document.getElementById('valuefield');
 
+//met à jour le petit texte qui introduit le champ de saisi, et fait apparaître le bon champ de saisi
 var updateDispMiddle = function (e) {
     hidefiltres();
 
@@ -49,6 +52,8 @@ var updateDispMiddle = function (e) {
     inputWrapper.appendChild(displayer);
 };
 
+
+//cache tout
 var hidefiltres = function (e) {
     inputBudget.style.visibility = 'hidden';
     inputDiff.style.visibility = 'hidden';
@@ -56,5 +61,6 @@ var hidefiltres = function (e) {
     inputTxt.innerText = "";
 }
  
+//si on sélectionne un filtre, on appelle updateDispMiddle()
 filtreSelect.addEventListener('change', updateDispMiddle);
 updateDispMiddle()

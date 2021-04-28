@@ -79,13 +79,28 @@
 <div class="result-container">
     <h2>Recette trouvée :</h2>
     <div id="result-info">
-        <img style="display: inline-block;" src="https://assets.afcdn.com/recipe/20160926/5624_w157h157c1.jpg">
+        <img style="display: inline-block;" src="{{ _image_recette }}">
         <div id="result-info-txt">
-            <p>Pizza aux 3 fromages</p>
-            <p>Bon marché, très facile, 40 min de préparation</p>
+            <p><a href="{{_recette_url}}"> {{ _nom_recette }} </a> </p> <!-- Pizza aux 3 fromages -->
+            <p> {{ _data_recette }} </p> <!-- Bon marché, très facile, 40 min de préparation -->
+            
         </div>
     </div>
 </div>
+
+{% elif show_result == "en cours" %}
+<div class="result-container">
+    <h2>Recette trouvée :</h2>
+    <div id="result-info">
+        <img style="display: inline-block;" src="{{ url_for('static', filename='img/loading.png') }}">
+        <div id="result-info-txt">
+            <p> Recherche en cours </p>
+        </div>
+    </div>
+</div>
+<!-- ↑ ne marche pas ↑ Le but était de monter ça quand l'aglo tourne, une petite image de chargement.
+Maos pour ça il faut faire render_template sans retourner la fonction, je n'ai pas réussi -->
+
 {% endif %}
 
 

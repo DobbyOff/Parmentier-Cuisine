@@ -7,6 +7,8 @@
         que tout est écrasé vers le bas, rechargez la page avec Ctrl+Maj+R (pour vider le cache css)
 
 
+Lancez le programme app.py, le server flask se lancera.
+
 ## architecture :
 Le programme va se diviser en 3 dossiers :
     ./marmiton_parser/ pour l'exploration du site de marmiton et le tri des recettes

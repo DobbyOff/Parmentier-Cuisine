@@ -36,7 +36,9 @@ def index():
     global FILTRES_Html, FILTRES_Liste, boutonDelHtml, boutonDelMontré, bouton_del_arg
     print(request)
     
-    
+    filterToChampDeSaisi = {"level":'filtrediffinput', "budget":'filtrebudgetinput',
+    "time":'inputTxt', "ingredientblacklist":'inputTxt', "ingredientwhitelist":'inputTxt'}
+
     #deux cas de figure possibles :
     #il n'y a aucun argument dans la requête, on charge la page html index sans rien
     #ou alors il y a un ou plus arguments, ça veut dire qu'on ajoute des filtres
@@ -44,63 +46,20 @@ def index():
     if len(request.args) > 0:
         #Valeurs du Form
         _filtre = request.args.get('filtre')
+        _valeur = request.args.get(filterToChampDeSaisi[_filtre])
         print(_filtre)
         #_filtre, c'est le filtre sélectionné
+        #_value, c'est la valeur lol
         
 
-        with open('templates/filtre-sample.html', 'r') as F:
-            nfiltre = F.read() #le code html de l'élément qu'on va ajouter
-            F.close()
-            #j'ai créé un fichier html pour contient une base pour le code html d'un filtre 
-        
-        #tout ce bazar en bas regarde quel filtre a été sélectionné, et agit en conséquences.
-        #l'html du filtre est composé de 2-3 mots introducteurs, et de la valeur du filtre
-        if _filtre == "level":
-            _valeur = request.args.get('filtrediffinput') #←le nom des args de la requete, allez voir index.html pour plus de clarté
-            FILTRES_Liste[filters.niveau] = _valeur #on met à jour le gros dictionnaire avec tous les filtres
-            nfiltre += "se cuisine avec un niveau " + _valeur #petit mot introducteur suivi de la valeur du filtre
-
-        elif _filtre == "budget": #même idée
-            _valeur = request.args.get('filtrebudgetinput')
-            FILTRES_Liste[filters.budget] = _valeur
-            nfiltre += "correspond à un budget " + _valeur
-            
-        elif _filtre in ['time', 'ingredientblacklist', 'ingredientwhitelist']:
-            _valeur = request.args.get('inputTxt') #pour le temps, ingredientblacklist ou ingredientwhitelist, le champ d'entrée est le même
-            if _filtre == 'time':
-                FILTRES_Liste[filters.tempsmax] = _valeur
-                nfiltre += "sera prête en " + _valeur
-
-            elif _filtre == 'ingredientblacklist':
-                FILTRES_Liste[filters.ingredientsblacklist].append(_valeur)
-                nfiltre += "ne contient pas l'ingrédient " + _valeur
-
-            else:
-                FILTRES_Liste[filters.ingredientswhitelist].append(_valeur)
-                nfiltre += "doit contenir l'ingrédient " + _valeur
-        else:
-            return "404 : arrête de faire joujou avec les url >:("
-            #problème d'url
-
-        nfiltre += "</p><div class=\"metadata\" hidden>" + _filtre + "</div><div class=\"metadata\" hidden>" + _valeur + "</div>"
-        nfiltre += "</li><!--coucou-->"
-        #ici on assemble l'html de l'élement filtre.
-        #en plus du filtre en lui même, j'ajoute deux élements div cachés, qui contiennent en clair le nom du filtre et sa valeur,
-        #on s'en sert pour supprimer les filtres un peu plus bas
-        FILTRES_Html = nfiltre + FILTRES_Html
-        #On ajoute l'élement nouvellement créé à tous les autres
-
-        #si le bouton pour supprimer un filtre n'est pas montré, on l'affiche
-        if not boutonDelMontré:
-            bouton_del_arg = boutonDelHtml
-            boutonDelMontré = True
+        AddFiltre(_filtre, _valeur)
 
         print(FILTRES_Liste)
         #Et on retourne enfin la page en belle forme
         return render_template('index.html', liste_filtres=FILTRES_Html, bouton_del=bouton_del_arg)
     
     else:
-        FILTRES_Html = ""
+        #FILTRES_Html = ""
         print(FILTRES_Liste)
         return render_template('index.html', liste_filtres="<li>Pas de filtres</li>", bouton_del=bouton_del_arg)
 
@@ -110,14 +69,19 @@ def index():
 #ajouter un filtre dynamiquement
 def AddFiltre(_filtre, _valeur):
     global FILTRES_Html, FILTRES_Liste, boutonDelHtml, boutonDelMontré, bouton_del_arg
+    #le code html de l'élément qu'on va ajouter
     with open('templates/filtre-sample.html', 'r') as F:
         html = F.read()
         F.close()
+        #j'ai créé un fichier html pour contient une base pour le code html d'un filtre 
 
+    #tout ce bazar en bas regarde quel filtre a été sélectionné, et agit en conséquences.
+    #l'html du filtre est composé de 2-3 mots introducteurs, et de la valeur du filtre
     if _filtre == 'level':
-        FILTRES_Liste[filters.niveau] = _valeur
-        html += "se cuisine avec un niveau " + _valeur
+        FILTRES_Liste[filters.niveau] = _valeur #on met à jour le gros dictionnaire avec tous les filtres
+        html += "se cuisine avec un niveau " + _valeur #petit mot introducteur suivi de la valeur du filtre
 
+    #même idée répétée plein de fois
     elif _filtre == "budget":
         FILTRES_Liste[filters.budget] = _valeur
         html += "correspond à un budget " + _valeur
@@ -131,7 +95,7 @@ def AddFiltre(_filtre, _valeur):
         html += "ne contient pas l'ingrédient " + _valeur
 
     elif _filtre == "ingredientwhitelist":
-        FILTRES_Liste[filters.ingredientswhitelist].append(_value)
+        FILTRES_Liste[filters.ingredientswhitelist].append(_valeur)
         html += "doit contenir l'ingrédient " + _valeur
 
     else:
@@ -140,14 +104,18 @@ def AddFiltre(_filtre, _valeur):
     
     html += "</p><div class=\"metadata\" hidden>" + _filtre + "</div><div class=\"metadata\" hidden>" + _valeur + "</div>"
     html += "</li><!--coucou-->"
+    #ici on assemble l'html de l'élement filtre.
+    #en plus du filtre en lui même, j'ajoute deux élements div cachés, qui contiennent en clair le nom du filtre et sa valeur,
+    #on s'en sert pour supprimer les filtres un peu plus bas
 
-    FILTRES_Html = nfiltre + FILTRES_Html
+    FILTRES_Html = html + FILTRES_Html
+    #On ajoute l'élement nouvellement créé à tous les autres
 
+    #si le bouton pour supprimer un filtre n'est pas montré, on l'affiche
     if not boutonDelMontré:
         bouton_del_arg = boutonDelHtml
         boutonDelMontré = True
 
-    print(FILTRES_List)
 
 
 #pour supprimer le dernier filtre
@@ -186,16 +154,19 @@ def DeleteLastFiltre():
 
 
 
-@app.route('/closeresult' method=['GET'])
+@app.route('/closeresult', methods=['GET'])
 def fermer_résultat():
     index()
     #je trie l'énorme dico filtres pour prendre juste ce qui a été rempli
     F = {i:FILTRES_Liste[i] for i in FILTRES_Liste if (FILTRES_Liste[i] != [] and FILTRES_Liste[i] != None)}
     
     nfltr_ = len(F)
-    for filtre in len(F.keys()):
-        if filtre = nfltr_ -1:
-            return render_template('index.html', liste_filtres=FILTRES_Html, bouton_del=bouton_del_arg)
+    # for filtre in len(F.keys()):
+    #     AddFiltre()
+    #     if filtre == nfltr_ -1:
+    print(FILTRES_Html, '\n\n', FILTRES_Liste)
+    return render_template('index.html', liste_filtres=FILTRES_Html, bouton_del=bouton_del_arg)
+            
 
 
         

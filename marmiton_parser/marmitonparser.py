@@ -72,7 +72,7 @@ class MarmitonParser:
                 _rniveau = R._preparationdata['level']
                 _rniveaucomparable = PREPINFO_TRANSLATOR[_rniveau]
                 _fniveaucomparable = PREPINFO_TRANSLATOR[_fniveau]
-                #selon l'endroit du programme où on est, le niveau et le budget peut être un nombre, 
+                #selon l'endroit du programme où on est, le niveau et le budget peuvent être un nombre, 
                 #une chaine de caractère ou une instance d'un enum. J'ai fais une fonction pour les 
                 #uniformiser et pouvoir les comparer → marmiton_parser/data.py
 

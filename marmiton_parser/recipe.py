@@ -3,12 +3,12 @@ from bs4 import BeautifulSoup
 
 class Recipe:
     _url = ""
-    _metadata = {} #étoiles, likes (DONE)
-    _preparationdata = {} #temps de prep, budget, difficulté (DONE)
+    _metadata = {} #étoiles, likes
+    _preparationdata = {} #temps de prep, budget, difficulté
     _regimes = [] #ne marche pas, je crois que Marmiton ont retiré cette info des pages
-    _thumbnailurl = "" #Adresse URL de l'image de la recette #DONE
+    _thumbnailurl = "" #Adresse URL de l'image de la recette 
     _ingredients = {} #dictionnaire avec tous les ingrédients
-    _title = ""
+    _title = "" #...le titre de la recette
 
     def __init__(self, url):
         self._url = url
@@ -25,6 +25,7 @@ class Recipe:
 
     def __ExtractData(self): #TODO : make this async
         """lis l'html de la page et s'en sert pour remplir tous les champs de la classe"""
+
             #thumbnailurl : l'url de la photo de la recette
         tbnls = self.soup.find_all('img', id="recipe-media-viewer-thumbnail-0")
         try:
@@ -36,10 +37,10 @@ class Recipe:
             try: 
                 tbnls = self.soup.find_all('img', id="recipe-media-viewer-main-picture")
                 self._thumbnailurl = tbnls[0]['data-src']
-            except IndexError: #Des fois y'a vraiment pas d'images
+            except IndexError: #Des fois y'a vraiment pas d'images. Je mets une icone à la place, suivez le liens
                 self._thumbnailurl = "https://cdn2.iconfinder.com/data/icons/warning-solid-icons-2/48/78-512.png"
                 
-            #metadata : le nombre de likes, le score utilisateur
+        #metadata : le nombre de likes, le score utilisateur
         score = self.soup.find('span', class_="recipe-header__rating-text")
         self._metadata['score'] = score.string
 
@@ -51,7 +52,7 @@ class Recipe:
                 self._metadata['likes'] = value.string #marmiton ont mis à jour leur site et ne font plus apparaître le 
                                                         #nombre de likes, donc je devrais enlever ce bout de code.
 
-            #preparationdata : le temps, le budget et la difficulté de la préparation
+        #preparationdata : le temps, le budget et la difficulté de la préparation
         metadata = self.soup.find_all('div', class_="recipe-primary__item")
         #ces infos sont toutes rangées dans une div, qu'on trouve ↑ ici ↑
         #Puis on se ballade dans le contenu de la div et on trouve ce qu'on veux.
@@ -64,7 +65,7 @@ class Recipe:
         level = metadata[1].contents[3]
         self._preparationdata['level'] = level.string #c'est la difficulité ici
 
-            #title : le nom de la recette
+        #title : le nom de la recette
         self._title = self.soup.find('h1', class_="main-title show-more").string
 
 
@@ -97,7 +98,7 @@ class Recipe:
 
 
 #        Petit aperçu de l'intérieur d'une instance de Recipe après exécution du constructeur :
-#        (obtenu en condition réelles)
+#        (obtenu empiriquement)
 
 
 # _ingredients = {'coulis de tomate': ('petits pots', '1'), 

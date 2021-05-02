@@ -35,7 +35,7 @@ boutonDelHtml = "<form action='/delete_last_filtre' method='GET'><input type='su
 def index():
     global FILTRES_Html, FILTRES_Liste, boutonDelHtml, boutonDelMontré, bouton_del_arg
     print(request)
-    FILTRES_Html = ""
+    
     
     #deux cas de figure possibles :
     #il n'y a aucun argument dans la requête, on charge la page html index sans rien
@@ -86,7 +86,7 @@ def index():
         nfiltre += "</li><!--coucou-->"
         #ici on assemble l'html de l'élement filtre.
         #en plus du filtre en lui même, j'ajoute deux élements div cachés, qui contiennent en clair le nom du filtre et sa valeur,
-        #on s'en sert pour les supprimer
+        #on s'en sert pour supprimer les filtres un peu plus bas
         FILTRES_Html = nfiltre + FILTRES_Html
         #On ajoute l'élement nouvellement créé à tous les autres
 
@@ -100,9 +100,54 @@ def index():
         return render_template('index.html', liste_filtres=FILTRES_Html, bouton_del=bouton_del_arg)
     
     else:
+        FILTRES_Html = ""
         print(FILTRES_Liste)
         return render_template('index.html', liste_filtres="<li>Pas de filtres</li>", bouton_del=bouton_del_arg)
 
+
+
+
+#ajouter un filtre dynamiquement
+def AddFiltre(_filtre, _valeur):
+    global FILTRES_Html, FILTRES_Liste, boutonDelHtml, boutonDelMontré, bouton_del_arg
+    with open('templates/filtre-sample.html', 'r') as F:
+        html = F.read()
+        F.close()
+
+    if _filtre == 'level':
+        FILTRES_Liste[filters.niveau] = _valeur
+        html += "se cuisine avec un niveau " + _valeur
+
+    elif _filtre == "budget":
+        FILTRES_Liste[filters.budget] = _valeur
+        html += "correspond à un budget " + _valeur
+    
+    elif _filtre == 'time':
+        FILTRES_Liste[filters.tempsmax] = _valeur
+        html += 'sera prête en ' + _valeur
+
+    elif _filtre == "ingredientblacklist":
+        FILTRES_Liste[filters.ingredientsblacklist].append(_valeur)
+        html += "ne contient pas l'ingrédient " + _valeur
+
+    elif _filtre == "ingredientwhitelist":
+        FILTRES_Liste[filters.ingredientswhitelist].append(_value)
+        html += "doit contenir l'ingrédient " + _valeur
+
+    else:
+        raise Exception("filtre inconnu : ", _filter)
+
+    
+    html += "</p><div class=\"metadata\" hidden>" + _filtre + "</div><div class=\"metadata\" hidden>" + _valeur + "</div>"
+    html += "</li><!--coucou-->"
+
+    FILTRES_Html = nfiltre + FILTRES_Html
+
+    if not boutonDelMontré:
+        bouton_del_arg = boutonDelHtml
+        boutonDelMontré = True
+
+    print(FILTRES_List)
 
 
 #pour supprimer le dernier filtre
@@ -141,6 +186,19 @@ def DeleteLastFiltre():
 
 
 
+@app.route('/closeresult' method=['GET'])
+def fermer_résultat():
+    index()
+    #je trie l'énorme dico filtres pour prendre juste ce qui a été rempli
+    F = {i:FILTRES_Liste[i] for i in FILTRES_Liste if (FILTRES_Liste[i] != [] and FILTRES_Liste[i] != None)}
+    
+    nfltr_ = len(F)
+    for filtre in len(F.keys()):
+        if filtre = nfltr_ -1:
+            return render_template('index.html', liste_filtres=FILTRES_Html, bouton_del=bouton_del_arg)
+
+
+        
 
 
 
@@ -180,6 +238,7 @@ def TrouverRecette():
     #maintenant il faut afficher les résultats !
     #On récupère les infos qu'on va afficher à l'utilisateur, on les fait rentrer dans une string
     titre = recette._title
+        ### /!\ Python 3.6+ pour ce petit tour de magie ↓↓↓
     data = f"{recette._preparationdata['budget']}, {recette._preparationdata['level']}, {recette._preparationdata['time']} de préparation"
     url = recette._url
     imageurl = recette._thumbnailurl
@@ -195,6 +254,3 @@ def TrouverRecette():
 if __name__ == "__main__":
     app.run(debug=True)
 
-
-# TODO :
-#  - faire en sorte que le prg oublie les filtres après avoir trouvé une recette

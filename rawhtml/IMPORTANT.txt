@@ -1,0 +1,3 @@
+Ce dossier entier est inutile.
+En fait, c'est des vielles versions des pages HTML que je conserve pour des questions de sécurité
+Je les supprimerais pour la présentation.

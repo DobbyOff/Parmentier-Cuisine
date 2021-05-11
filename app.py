@@ -99,7 +99,7 @@ def AddFiltre(_filtre, _valeur):
         html += "doit contenir l'ingrédient " + _valeur
 
     else:
-        raise Exception("filtre inconnu : ", _filter)
+        raise Exception("filtre inconnu : ", _filtre)
 
     
     html += "</p><div class=\"metadata\" hidden>" + _filtre + "</div><div class=\"metadata\" hidden>" + _valeur + "</div>"

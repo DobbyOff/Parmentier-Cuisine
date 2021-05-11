@@ -27,22 +27,23 @@ class Recipe:
         """lis l'html de la page et s'en sert pour remplir tous les champs de la classe"""
 
             #thumbnailurl : l'url de la photo de la recette
-        tbnls = self.soup.find_all('img', id="recipe-media-viewer-thumbnail-0")
+        tbnls = self.soup.find_all('img', class_=lambda value: value and value.startswith("Picturestyle__PictureImg-"))
         try:
-            self._thumbnailurl = tbnls[0]['data-src']
+            self._thumbnailurl = tbnls[0]['src']
         except IndexError:
             #Il se peut qu'il n'y ait qu'une image, que marmiton place à la place de la vidéo de préparation. 
             #Je vais donc chercher la photo de la recette à un autre endroit dans ces cas là, 
             #quand il n'y a rien dans la liste des images possibles (la liste tbnls).
             try: 
                 tbnls = self.soup.find_all('img', id="recipe-media-viewer-main-picture")
-                self._thumbnailurl = tbnls[0]['data-src']
+                self._thumbnailurl = tbnls[0]['src']
             except IndexError: #Des fois y'a vraiment pas d'images. Je mets une icone à la place, suivez le liens
                 self._thumbnailurl = "https://cdn2.iconfinder.com/data/icons/warning-solid-icons-2/48/78-512.png"
                 
         #metadata : le nombre de likes, le score utilisateur
-        score = self.soup.find('span', class_="recipe-header__rating-text")
-        self._metadata['score'] = score.string
+        score = self.soup.find('span', class_="sc-cVkrFx hzPuOC")
+        #sc-tkKAw iONwHy
+        #self._metadata['score'] = score.string
 
         nlikes = self.soup.find_all('span', class_="recipe-infos-users__value")
         for value in nlikes:
@@ -53,48 +54,57 @@ class Recipe:
                                                         #nombre de likes, donc je devrais enlever ce bout de code.
 
         #preparationdata : le temps, le budget et la difficulté de la préparation
-        metadata = self.soup.find_all('div', class_="recipe-primary__item")
+        #metadata = self.soup.find_all('div', class_="recipe-primary__item")
+
+        metadata = self.soup.find_all('div', class_=lambda value: value and value.startswith("Infosstyle__Layout-"))
+
         #ces infos sont toutes rangées dans une div, qu'on trouve ↑ ici ↑
         #Puis on se ballade dans le contenu de la div et on trouve ce qu'on veux.
-        time = metadata[0].contents[3]
-        self._preparationdata['time'] = time.string
+        time = metadata[0].contents[0].find('p')
+        self._preparationdata['time'] = time.text.encode('latin-1').decode("utf-8", 'ignore')
 
-        cost = metadata[2].contents[3]
-        self._preparationdata['budget'] = cost.string
+        cost = metadata[0].contents[4]
+        self._preparationdata['budget'] = cost.text
 
-        level = metadata[1].contents[3]
-        self._preparationdata['level'] = level.string #c'est la difficulité ici
+        level = metadata[0].contents[2]
+        self._preparationdata['level'] = level.text #c'est la difficulité ici
 
         #title : le nom de la recette
-        self._title = self.soup.find('h1', class_="main-title show-more").string
+        titleparent = self.soup.find('div', class_=lambda value: value and value.startswith("Titlestyle__TitleContainer"))
+        self._title = titleparent.text
 
 
     def __GetIngredients(self):
         """lis l'html et en retourne un dictionnaire avec les ingrédients.
         Similaire à __ExtractData, séparé pour des questions de lisibilité."""
 
-        ingrlist = self.soup.find('div', class_="ingredient-list__ingredient-group").find('ul', class_="item-list").find_all('li')
+        #ingrlist = self.soup.find('div', class_="ingredient-list__ingredient-group").find('ul', class_="item-list").find_all('li')
+        ingrlist = self.soup.find_all('div', class_="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-3")
         #c'est long, c'est imcompréhensible, mais ça marche
-        Ingredients = {}
+        Ingredients = []
 
         for ingr in ingrlist:
             if ingr == '\n':
                 continue
+            
+            txt = ingr.text.replace('⁄', '')
 
-            ingrType = ingr.find('div', class_='ingredient-data')['data-singular']
-            ingrQuantite = ( ingr.find('div', class_='unit-data')['data-plural'], 
-            ingr.find('div', class_='quantity-data')['data-base-qt'] )
-            Ingredients[ingrType] = ingrQuantite
+            try:
+                Ingredients.append(txt.encode('latin-1').decode("utf-8", 'ignore'))
+            except UnicodeEncodeError:
+                Ingredients.append(txt[1:].encode('latin-1').decode("utf-8", 'ignore'))
 
         return Ingredients
 
     
     def Contains(self, ingr):
         """retourne True si l'ingrédient passé en commentaire (str) est contenu dans la recette"""
-        print("recipe :", ingr)
+        print("recipe :", ingr, self._ingredients)
         for e in self._ingredients:
-            if ingr.capitalize() in e.capitalize():
+            if ingr.upper() in e.upper():
                 return True
+        
+        return False
 
 
 #        Petit aperçu de l'intérieur d'une instance de Recipe après exécution du constructeur :

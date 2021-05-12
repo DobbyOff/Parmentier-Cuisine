@@ -27,9 +27,9 @@ class Recipe:
         """lis l'html de la page et s'en sert pour remplir tous les champs de la classe"""
 
             #thumbnailurl : l'url de la photo de la recette
-        tbnls = self.soup.find_all('img', class_=lambda value: value and value.startswith("Picturestyle__PictureImg-"))
+        tbnls = self.soup.find_all('img', id="recipe-media-viewer-thumbnail-0")
         try:
-            self._thumbnailurl = tbnls[0]['src']
+            self._thumbnailurl = tbnls[0]['data-src']
         except IndexError:
             #Il se peut qu'il n'y ait qu'une image, que marmiton place à la place de la vidéo de préparation. 
             #Je vais donc chercher la photo de la recette à un autre endroit dans ces cas là, 
@@ -56,21 +56,21 @@ class Recipe:
         #preparationdata : le temps, le budget et la difficulté de la préparation
         #metadata = self.soup.find_all('div', class_="recipe-primary__item")
 
-        metadata = self.soup.find_all('div', class_=lambda value: value and value.startswith("Infosstyle__Layout-"))
+        metadata = self.soup.find_all('div', class_="recipe-primary__item")
 
         #ces infos sont toutes rangées dans une div, qu'on trouve ↑ ici ↑
         #Puis on se ballade dans le contenu de la div et on trouve ce qu'on veux.
-        time = metadata[0].contents[0].find('p')
-        self._preparationdata['time'] = time.text.encode('latin-1').decode("utf-8", 'ignore')
+        time = metadata[0].find('span')
+        self._preparationdata['time'] = time.text
 
-        cost = metadata[0].contents[4]
+        cost = metadata[2].find('span')
         self._preparationdata['budget'] = cost.text
 
-        level = metadata[0].contents[2]
+        level = metadata[1].find('span')
         self._preparationdata['level'] = level.text #c'est la difficulité ici
 
         #title : le nom de la recette
-        titleparent = self.soup.find('div', class_=lambda value: value and value.startswith("Titlestyle__TitleContainer"))
+        titleparent = self.soup.find('h1', class_="main-title show-more")
         self._title = titleparent.text
 
 
@@ -79,7 +79,7 @@ class Recipe:
         Similaire à __ExtractData, séparé pour des questions de lisibilité."""
 
         #ingrlist = self.soup.find('div', class_="ingredient-list__ingredient-group").find('ul', class_="item-list").find_all('li')
-        ingrlist = self.soup.find_all('div', class_="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-3")
+        ingrlist = self.soup.find('div', class_="ingredient-list__ingredient-group").find_all('li')
         #c'est long, c'est imcompréhensible, mais ça marche
         Ingredients = []
 
@@ -87,12 +87,14 @@ class Recipe:
             if ingr == '\n':
                 continue
             
-            txt = ingr.text.replace('⁄', '')
+            txt = ingr.find('div', class_="item__ingredient").text.replace('\n', '').replace(' ', '')
+
+
 
             try:
-                Ingredients.append(txt.encode('latin-1').decode("utf-8", 'ignore'))
+                Ingredients.append(txt)
             except UnicodeEncodeError:
-                Ingredients.append(txt[1:].encode('latin-1').decode("utf-8", 'ignore'))
+                Ingredients.append(txt[1:])
 
         return Ingredients
 
